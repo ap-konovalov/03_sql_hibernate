@@ -20,7 +20,7 @@ public class PersonsController {
     }
 
     @PostMapping("/person")
-    public ResponseEntity<> addPerson(@RequestBody Person person) {
+    public ResponseEntity addPerson(@RequestBody Person person) {
         return new ResponseEntity<>(personsService.addPerson(person));
     }
 }
