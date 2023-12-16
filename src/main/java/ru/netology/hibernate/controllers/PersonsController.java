@@ -15,12 +15,23 @@ public class PersonsController {
     private final PersonsService personsService;
 
     @GetMapping("/persons/by-city")
-    public List<Person> getPersonsByCity(@RequestParam String city) {
-        return personsService.getPersonsByCity(city);
+    public ResponseEntity<List<Person>> getPersonsByCity(@RequestParam String city) {
+        return ResponseEntity.ok(personsService.findByCityOfLiving(city));
+    }
+
+    @GetMapping("/persons/by-age")
+    public ResponseEntity<List<Person>> getByAgeLessThan(@RequestParam int age) {
+        return ResponseEntity.ok(personsService.findByAgeLessThan(age));
+    }
+
+    @GetMapping("/persons/by-name-surname")
+    public ResponseEntity<List<Person>> getByNameAndSurname(@RequestParam String name,
+                                                            @RequestParam String surname) {
+        return ResponseEntity.ok(personsService.findByNameAndSurname(name, surname));
     }
 
     @PostMapping("/person")
-    public ResponseEntity addPerson(@RequestBody Person person) {
-        return new ResponseEntity<>(personsService.addPerson(person));
+    public ResponseEntity<Person> savePerson(@RequestBody Person person) {
+        return ResponseEntity.ok(personsService.savePerson(person));
     }
 }

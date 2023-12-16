@@ -1,40 +1,19 @@
 package ru.netology.hibernate.repositories;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.netology.hibernate.entities.Person;
 import ru.netology.hibernate.entities.PersonsPK;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-@NoArgsConstructor
-public class PersonsRepository {
+public interface PersonsRepository extends JpaRepository<Person, PersonsPK> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    Optional<List<Person>> findByCityOfLiving(String cityOfLiving);
 
-    @Transactional
-    public List<Person> getPersonsByCity(String city) {
-        var query = entityManager.createQuery("SELECT p FROM Person p WHERE p.cityOfLiving = ?1", Person.class);
-        return query.setParameter(1, city).getResultList();
-    }
+    Optional<List<Person>> findByPkAgeLessThanOrderByPkAgeAsc(int age);
 
-    @Transactional
-    public HttpStatus addPerson(Person person) {
-        PersonsPK pk = PersonsPK.builder()
-                .age(person.getPk().getAge())
-                .name(person.getPk().getName())
-                .surname(person.getPk().getSurname())
-                .build();
-        if (entityManager.find(Person.class, pk) == null) {
-            entityManager.persist(person);
-            return HttpStatus.CREATED;
-        }
-        return HttpStatus.BAD_REQUEST;
-    }
+    Optional<List<Person>> findByPkNameAndPkSurname(String name, String surname);
 }
