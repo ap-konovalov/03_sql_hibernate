@@ -6,3 +6,6 @@ https://github.com/netology-code/jd-homeworks/blob/master/spring-jpa/task1/READM
 
 ### Задание spring_security
 https://github.com/netology-code/jd-homeworks/blob/master/spring_security/task1/README.md
+
+### Задание spring_method_security
+https://github.com/netology-code/jd-homeworks/blob/master/spring_method_security/task1/README.md
